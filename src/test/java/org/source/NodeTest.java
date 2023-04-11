@@ -4,25 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class NodeTest {
 
-    private Node createStructure(){
-        Node root = new Node(5);
-        Node left = new Node(3);
-        root.setLeft(left);
-        left.setLeft(new Node(2));
-        left.setRight(new Node(5));
-        Node right = new Node(7);
-        root.setRight(right);
-        right.setLeft(new Node(1));
-        right.setRight(new Node(0));
-        right = right.getRight();
-        right.setLeft(new Node(2));
-        right.setRight(new Node(8));
-        right = right.getRight();
-        right.setRight(new Node(5));
-        return root;
-    }
 
     final Node dummyNode = createStructure();
 
@@ -68,7 +52,7 @@ class NodeTest {
     @Test
     void ShouldCountLeafs() {
         //when
-        int res = Node.countLeafs(dummyNode);
+        int res = NodeUtils.countLeafs(dummyNode);
         //then
         assertEquals(res, 5);
     }
@@ -76,18 +60,49 @@ class NodeTest {
     @Test
     void ShouldReturnLongestPath() {
         //when
-        int res = Node.longestPath(dummyNode);
+        int res = NodeUtils.longestPath(dummyNode);
         //then
         assertEquals(res, 4);
     }
 
     @Test
-    void ShouldReturnTwoStructuresAreEqual(){
+    void ShouldReturnTwoStructuresAreEqual() {
         //given
         Node dummyNode2 = createStructure();
         //when
-        boolean res = Node.structureEquals(dummyNode, dummyNode2);
+        boolean res = NodeUtils.structureEquals(dummyNode, dummyNode2);
         //then
         assertTrue(res);
     }
+
+    @Test
+    void ShouldNotReturnTwoStructuresAreEqual() {
+        //gvien
+        Node dummyNode2 = new Node(5);
+        dummyNode2.setLeft(new Node(3));
+        dummyNode2.setRight(new Node(7));
+        //when
+        boolean res = NodeUtils.structureEquals(dummyNode, dummyNode2);
+        //then
+        assertFalse(res);
+    }
+
+    private Node createStructure() {
+        Node root = new Node(5);
+        Node left = new Node(3);
+        root.setLeft(left);
+        left.setLeft(new Node(2));
+        left.setRight(new Node(5));
+        Node right = new Node(7);
+        root.setRight(right);
+        right.setLeft(new Node(1));
+        right.setRight(new Node(0));
+        right = right.getRight();
+        right.setLeft(new Node(2));
+        right.setRight(new Node(8));
+        right = right.getRight();
+        right.setRight(new Node(5));
+        return root;
+    }
+
 }
